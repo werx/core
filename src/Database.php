@@ -1,6 +1,6 @@
 <?php
 
-namespace Toadsuck\Core;
+namespace werx\Core;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Prelude\Dsn\DsnParser;

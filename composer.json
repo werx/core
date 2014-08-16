@@ -1,7 +1,7 @@
 {
-	"name": "toadsuck/core",
-	"description": "Front controller and other core libraries used by the Toadsuck project.",
-	"homepage": "https://github.com/toadsuck/toadsuck-core",
+	"name": "werx/core",
+	"description": "Front controller and other core libraries used by the Werx project.",
+	"homepage": "https://github.com/werx/core",
 	"license": "MIT",
 	"authors": [
 		{
@@ -11,11 +11,11 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"Toadsuck\\Core\\Tests\\": "tests/",
-			"Toadsuck\\Core\\Tests\\App\\": "tests/resources/",
-			"Toadsuck\\Core\\Tests\\App\\Controllers\\": "tests/resources/controllers/",
-			"Toadsuck\\Core\\Tests\\App\\Models\\": "tests/resources/models/",
-			"Toadsuck\\Core\\": "src/"
+			"werx\\Core\\Tests\\": "tests/",
+			"werx\\Core\\Tests\\App\\": "tests/resources/",
+			"werx\\Core\\Tests\\App\\Controllers\\": "tests/resources/controllers/",
+			"werx\\Core\\Tests\\App\\Models\\": "tests/resources/models/",
+			"werx\\Core\\": "src/"
 		}
 	},
 	"require": {

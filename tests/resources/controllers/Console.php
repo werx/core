@@ -1,8 +1,8 @@
 <?php
 
-namespace Toadsuck\Core\Tests\App\Controllers;
+namespace werx\Core\Tests\App\Controllers;
 
-use Toadsuck\Core\Console as ConsoleController;
+use werx\Core\Console as ConsoleController;
 
 class Console extends ConsoleController
 {

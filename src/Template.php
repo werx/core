@@ -1,5 +1,5 @@
 <?php
-namespace Toadsuck\Core;
+namespace werx\Core;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

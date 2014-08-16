@@ -1,8 +1,8 @@
 <?php
 
-namespace Toadsuck\Core\Tests\App\Controllers;
+namespace werx\Core\Tests\App\Controllers;
 
-use Toadsuck\Core\Controller;
+use werx\Core\Controller;
 
 class Home extends Controller
 {

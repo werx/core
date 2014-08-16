@@ -1,8 +1,8 @@
-# Toadsuck.Core
+# werx.Core
 
-## Core libraries for the [Toadsuck Project](http://toadsuck.github.io)
+## Core libraries for the [Werx Project](http://werx.github.io)
 
-[![Build Status](https://travis-ci.org/toadsuck/toadsuck-core.png?branch=master)](https://travis-ci.org/toadsuck/toadsuck-core) [![Total Downloads](https://poser.pugx.org/toadsuck/core/downloads.png)](https://packagist.org/packages/toadsuck/core) [![Latest Stable Version](https://poser.pugx.org/toadsuck/core/v/stable.png)](https://packagist.org/packages/toadsuck/core)
+[![Build Status](https://travis-ci.org/werx/core.png?branch=master)](https://travis-ci.org/werx/core) [![Total Downloads](https://poser.pugx.org/werx/core/downloads.png)](https://packagist.org/packages/werx/core) [![Latest Stable Version](https://poser.pugx.org/werx/core/v/stable.png)](https://packagist.org/packages/werx/core)
 
 - Routing - [Aura.Router](https://github.com/auraphp/Aura.Router)
 - HTTP Abstraction - [Symfony\HttpFoundation](https://github.com/symfony/HttpFoundation)
@@ -11,7 +11,7 @@
 - Configuration Management - [werx\Config](https://github.com/werx/config)
 - Unit Tests - [PHPUnit](https://github.com/sebastianbergmann/phpunit) (of course, why use anything else?)
 
-Learn more at [The Toadsuck Project](http://toadsuck.github.io) or see [Toadsuck.Skeleton](https://github.com/toadsuck/toadsuck-skeleton) for a reference implementation.
+Learn more at [The Werx Project](http://werx.github.io) or see [werx\Skeleton](https://github.com/werx/skeleton) for a reference implementation.
 
 ## Installation
 Installation of this package is easy with Composer. If you aren't familiar with the Composer Dependency Manager for PHP, [you should read this first](https://getcomposer.org/doc/00-intro.md).
@@ -20,7 +20,7 @@ Installation of this package is easy with Composer. If you aren't familiar with 
 ``` json
 {
 	"require": {
-        "toadsuck/core": "dev-develop-2"
+        "werx/core": "dev-master"
     },
 	"minimum-stability": "dev"
 }
@@ -29,7 +29,7 @@ Installation of this package is easy with Composer. If you aren't familiar with 
 
 - Your application resides in `src/` and has a base namespace of `Example\Project`
 - Your controllers are in `src/controllers/` and have a namespace of `Example\Project\Controllers`
-	- Your controllers extend `Toadsuck\Core\Controller`
+	- Your controllers extend `werx\Core\Controller`
 
 ```
 src/
@@ -72,13 +72,13 @@ require_once $app_dir . '/vendor/autoload.php';
 // Pass a couple options to our dispatcher.
 $opts = ['app_dir' => $app_dir, 'namespace' => __NAMESPACE__];
 
-$app = new \Toadsuck\Core\Dispatcher($opts);
+$app = new \werx\Core\Dispatcher($opts);
 
 // Dispatch the request.
 $app->dispatch();
 ```
 
-This will turn control of dispatching the request to the Toadsuck.Core dispatcher.
+This will turn control of dispatching the request to the werx.Core dispatcher.
 
 ## Routing
 Routing is handled by the [Aura Router](https://github.com/auraphp/Aura.Router).
@@ -149,7 +149,7 @@ You can tell the app which environment you are running in by modifying the conte
 
 Then load your config as you normally would. The configuration items will be merged between the default config environment-specific overrides.
 
-See the [werx\Congif Docs](https://github.com/werx/config/blob/master/README.md) for more information on configuration management.
+See the [werx\Config Docs](https://github.com/werx/config/blob/master/README.md) for more information on configuration management.
 
 ### Extra Configuration Helper Methods
 
@@ -199,7 +199,7 @@ class Home extends Controller
 	public function index()
 	{
 		// Set some variables for all views.
-		$this->template->page_title = 'Toadsuck Skeleton';
+		$this->template->page_title = 'Werx Skeleton';
 
 		// Render and Display the home/index view, passing a variable named "heading".
 		$this->template->output('home/index', ['heading' => 'Congratulations, it worked!']);
@@ -272,9 +272,9 @@ HTTP Abstraction is provided by [Symfony\HttpFoundation](https://github.com/symf
 namespace Example\Project\Controllers;
 
 use Illuminate\Database\Capsule\Manager as Model;
-use Toadsuck\Core\Controller;
-use Toadsuck\Core\Database as DB;
-use Toadsuck\Skeleton\Models\Widget;
+use werx\Core\Controller;
+use werx\Core\Database as DB;
+use werx\Skeleton\Models\Widget;
 
 class Home extends Controller
 {
@@ -317,25 +317,25 @@ Examples:
 # Symfony way to access an attribute from $_POST
 $foo = $this->request->request->get('foo');
 
-# Toadsuck way to access an attribute from $_POST
+# Werx way to access an attribute from $_POST
 $foo = $this->input->post('foo');
 
 # Symfony way to access an attribute from $_GET
 $foo = $this->request->query->get('foo');
 
-# Toadsuck way to access an attribute from $_GET
+# Werx way to access an attribute from $_GET
 $foo = $this->input->get('foo');
 
 # Symfony way to access the entire $_POST array
 $post = $this->request->request->all();
 
-# Toadsuck way to access the entire $_POST array
+# Werx way to access the entire $_POST array
 $post = $this->input->post();
 
 # Symfony way to access the entire $_GET array
 $get = $this->request->query->all();
 
-# Toadsuck way to access the entire $_GET array
+# Werx way to access the entire $_GET array
 $get = $this->input->get();
 ```
 
@@ -373,14 +373,14 @@ class Widget extends Model
 }
 ```
 
-#### Instead of extending Eloquent\Model directly, you can extend Toadsuck\Core\Model (which extends Eloquent) to get easier access to the query builder.
+#### Instead of extending Eloquent\Model directly, you can extend werx\Core\Model (which extends Eloquent) to get easier access to the query builder.
 
 ``` php
 # File: src/models/Widget.php
 
 namespace Example\Project\Models;
 
-use Toadsuck\Core\Model;
+use werx\Core\Model;
 
 class Widget extends Model
 {
@@ -411,7 +411,7 @@ class Widget extends Model
 #### Initialize the database before you try to use it.
 
 ``` php
-use Toadsuck\Core\Database as DB;
+use werx\Core\Database as DB;
 
 /*
 DSN can be pear-style DSN string: mysql://username:password@host/database OR an array of connection params

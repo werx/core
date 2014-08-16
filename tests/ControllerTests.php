@@ -1,14 +1,14 @@
 <?php
 
-namespace Toadsuck\Core\Tests;
+namespace werx\Core\Tests;
 
-use Toadsuck\Core\Tests\App\Controllers as Controllers;
+use werx\Core\Tests\App\Controllers as Controllers;
 
 class ControllerTests extends \PHPUnit_Framework_TestCase
 {
 	public function __construct()
 	{
-		$GLOBALS['TOADSUCK_BASE_PATH'] = __DIR__;
+		$GLOBALS['WERX_BASE_PATH'] = __DIR__;
 		ob_start();
 	}
 

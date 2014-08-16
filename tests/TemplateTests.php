@@ -1,8 +1,8 @@
 <?php
 
-namespace Toadsuck\Core\Tests;
+namespace werx\Core\Tests;
 
-use Toadsuck\Core\Template;
+use werx\Core\Template;
 
 class TemplateTests extends \PHPUnit_Framework_TestCase
 {

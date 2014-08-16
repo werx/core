@@ -1,8 +1,8 @@
 <?php
 
-namespace Toadsuck\Core\Tests;
+namespace werx\Core\Tests;
 
-use Toadsuck\Core\Input;
+use werx\Core\Input;
 
 class InputTests extends \PHPUnit_Framework_TestCase
 {

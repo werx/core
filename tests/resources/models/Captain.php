@@ -1,8 +1,8 @@
 <?php
 
-namespace Toadsuck\Core\Tests\App\Models;
+namespace werx\Core\Tests\App\Models;
 
-use Toadsuck\Core\Model;
+use werx\Core\Model;
 
 class Captain extends Model
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Toadsuck\Core\Tests;
+namespace werx\Core\Tests;
 
-use Toadsuck\Core\Config;
+use werx\Core\Config;
 
 class ConfigTests extends \PHPUnit_Framework_TestCase
 {
@@ -38,7 +38,7 @@ class ConfigTests extends \PHPUnit_Framework_TestCase
 	{
 		$_SERVER['SERVER_NAME'] = 'localhost';
 		$config = new Config($this->getAppDir());
-		$this->assertEquals('http://test.server.name/toadsuck/', $config->getBaseUrl());
+		$this->assertEquals('http://test.server.name/werx/', $config->getBaseUrl());
 	}
 
 	protected function getAppDir()

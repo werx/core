@@ -1,8 +1,8 @@
 <?php
 
-namespace Toadsuck\Core\Tests;
+namespace werx\Core\Tests;
 
-use Toadsuck\Core\Database;
+use werx\Core\Database;
 
 class DatabaseTests extends \PHPUnit_Framework_TestCase
 {
@@ -59,7 +59,7 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 	{
 		$this->databaseInitSimple();
 
-		$result = \Toadsuck\Core\Tests\App\Models\Captain::where('last_name', 'Kirk')->first();
+		$result = \werx\Core\Tests\App\Models\Captain::where('last_name', 'Kirk')->first();
 		$this->assertEquals('James', $result->first_name);
 	}
 
@@ -86,7 +86,7 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 	{
 		$this->databaseInitSimple();
 
-		$result = (object) \Toadsuck\Core\Tests\App\Models\Captain::queryBuilder()->where('last_name', 'Kirk')->first();
+		$result = (object) \werx\Core\Tests\App\Models\Captain::queryBuilder()->where('last_name', 'Kirk')->first();
 		$this->assertEquals('James', $result->first_name);
 	}
 
@@ -94,7 +94,7 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 	{
 		$this->databaseInitSimple();
 
-		$query = \Toadsuck\Core\Tests\App\Models\Captain::queryBuilder();
+		$query = \werx\Core\Tests\App\Models\Captain::queryBuilder();
 		$query->where('last_name', 'Kirk');
 		$result = (object) $query->first();
 		$this->assertEquals('James', $result->first_name);
@@ -104,7 +104,7 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 	{
 		$this->databaseInitSimple();
 
-		$result = \Toadsuck\Core\Tests\App\Models\Captain::search(['first_name' => 'James', 'last_name' => 'Picard']);
+		$result = \werx\Core\Tests\App\Models\Captain::search(['first_name' => 'James', 'last_name' => 'Picard']);
 
 		$this->assertTrue(empty($result));
 	}
@@ -113,7 +113,7 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 	{
 		$this->databaseInitSimple();
 
-		$result = \Toadsuck\Core\Tests\App\Models\Captain::search(['first_name' => 'James']);
+		$result = \werx\Core\Tests\App\Models\Captain::search(['first_name' => 'James']);
 
 		$this->assertTrue(count($result) == 1);
 	}
@@ -122,7 +122,7 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 	{
 		$this->databaseInitSimple();
 
-		$result = \Toadsuck\Core\Tests\App\Models\Captain::search(['first_name' => 'J']);
+		$result = \werx\Core\Tests\App\Models\Captain::search(['first_name' => 'J']);
 
 		$this->assertTrue(count($result) == 3);
 	}

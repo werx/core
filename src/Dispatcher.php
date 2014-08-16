@@ -1,6 +1,6 @@
 <?php
 
-namespace Toadsuck\Core;
+namespace werx\Core;
 
 use Aura\Router\RouterFactory;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,7 +10,7 @@ class Dispatcher
 {
 	public $opts = [];
 	public $router;
-	public $namespace = 'Toadsuck\Skeleton';
+	public $namespace = 'werx\Skeleton';
 	public $controller;
 	public $action;
 	public $id;
@@ -26,7 +26,7 @@ class Dispatcher
 
 		// @todo I feel a little dirty about this. Will revisit later.
 		if (array_key_exists('app_dir', $opts)) {
-			$GLOBALS['TOADSUCK_BASE_PATH'] = $opts['app_dir'];
+			$GLOBALS['WERX_BASE_PATH'] = $opts['app_dir'];
 		}
 		
 		$this->initializeRoutes();

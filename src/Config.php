@@ -1,6 +1,6 @@
 <?php
 
-namespace Toadsuck\Core;
+namespace werx\Core;
 
 /**
  * Thin wrapper for werx\config.
@@ -15,8 +15,8 @@ class Config
 		// We need to know paths to our resources.
 		if (!empty($base_path)) {
 			$this->base_path = $base_path;
-		} elseif (array_key_exists('TOADSUCK_BASE_PATH', $GLOBALS)) {
-			$this->base_path = rtrim($GLOBALS['TOADSUCK_BASE_PATH'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'src';
+		} elseif (array_key_exists('WERX_BASE_PATH', $GLOBALS)) {
+			$this->base_path = rtrim($GLOBALS['WERX_BASE_PATH'], DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . 'src';
 		} else {
 			throw new \Exception('base_path not defined!');
 		}

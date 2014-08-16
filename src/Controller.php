@@ -1,10 +1,10 @@
 <?php
 
-namespace Toadsuck\Core;
+namespace werx\Core;
 
-use Toadsuck\Core\Template;
-use Toadsuck\Core\Config;
-use Toadsuck\Core\Input;
+use werx\Core\Template;
+use werx\Core\Config;
+use werx\Core\Input;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

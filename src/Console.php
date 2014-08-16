@@ -1,8 +1,8 @@
 <?php
 
-namespace Toadsuck\Core;
+namespace werx\Core;
 
-use Toadsuck\Core\Config;
+use werx\Core\Config;
 
 class Console
 {
