@@ -18,6 +18,18 @@ class TemplateTests extends \PHPUnit_Framework_TestCase
 		$this->assertRegExp('/&lt;foo&gt;/', $output);
 	}
 
+	public function testEscapeClassVarsArray()
+	{
+		$template = new Template(__DIR__ . '/resources/views/');
+
+		$template->layout('layouts/default');
+
+		$template->foo = ['<foo>'];
+		$output = $template->render('foo_array');
+
+		$this->assertRegExp('/&lt;foo&gt;/', $output);
+	}
+
 	public function testEscapeViewVars()
 	{
 		$template = new Template(__DIR__ . '/resources/views/');
