@@ -4,6 +4,14 @@ namespace werx\Core;
 
 /**
  * Thin wrapper for werx\config.
+ *
+ * @method setProvider($provider = null)
+ * @method setEnvironment($environment = null)
+ * @method load($group = null, $index = false)
+ * @method set($key, $value, $index_name = 'default')
+ * @method get($key, $default_value = null, $index_name = 'default')
+ * @method all($index = null);
+ * @method clear();
  */
 class Config
 {
@@ -31,12 +39,22 @@ class Config
 
 		return $this->config;
 	}
-	
+
+	/**
+	 * Work out the path to a resource in your app.
+	 * @param $resource
+	 * @return string
+	 */
 	public function resolvePath($resource)
 	{
 		return rtrim($this->base_path . DIRECTORY_SEPARATOR . $resource, DIRECTORY_SEPARATOR);
 	}
-	
+
+	/**
+	 * What environment are we running in? Local? Development? Production?
+	 *
+	 * @return string
+	 */
 	public function getEnvironment()
 	{
 		$environment_file = $this->resolvePath('config/environment');
@@ -50,6 +68,12 @@ class Config
 		return $environment;
 	}
 
+	/**
+	 * Get the the base url of our app
+	 *
+	 * @param bool $include_script_name Should we include the filename (index.php)?
+	 * @return null|string The full URL to our app.
+	 */
 	public function getBaseUrl($include_script_name = false)
 	{
 		$this->config->load('config');
@@ -76,6 +100,16 @@ class Config
 			# http://example.com/path/to/app/
 			return $base_url;
 		}
+	}
+
+	/**
+	 * Get the the base url of our app, including the filename.
+	 *
+	 * @return null|string The full URL to our app, including the file name (index.php)
+	 */
+	public function getScriptUrl()
+	{
+		return $this->getBaseUrl(true);
 	}
 
 	public function __call($method, $args = [])

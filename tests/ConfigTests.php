@@ -41,6 +41,13 @@ class ConfigTests extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('http://test.server.name/werx/', $config->getBaseUrl());
 	}
 
+	public function testGetScriptUrlShouldReturnConfigItem()
+	{
+		$_SERVER['SERVER_NAME'] = 'localhost';
+		$config = new Config($this->getAppDir());
+		$this->assertContains('http://test.server.name/werx/phpunit', $config->getScriptUrl());
+	}
+
 	protected function getAppDir()
 	{
 		return __DIR__ .	DIRECTORY_SEPARATOR . 'resources';
