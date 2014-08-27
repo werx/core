@@ -97,17 +97,27 @@ class Dispatcher
 		$this->router = $router;
 	}
 
+	/**
+	 * @param string $message
+	 */
 	public function pageNotFound($message = 'Not Found')
 	{
 		$response = new Response($message, 404, ['Content-Type' => 'text/plain']);
 		$response->send();
 	}
 
+	/**
+	 * @param null $file
+	 * @return string
+	 */
 	public function getAppResourcePath($file = null)
 	{
 		return $this->getSrcDir() . '/' . $file;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getSrcDir()
 	{
 		return array_key_exists('app_dir', $this->opts) ? $this->opts['app_dir'] . '/src' : dirname(__DIR__) . '/src';

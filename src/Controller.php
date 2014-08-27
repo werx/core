@@ -14,14 +14,41 @@ use Symfony\Component\HttpFoundation\Session\Session;
 
 class Controller
 {
-	public $plates;
+	/**
+	 * @var \werx\Core\Template $template
+	 */
 	public $template;
+
+	/**
+	 * @var \werx\Core\Config $config
+	 */
 	public $config;
+
+	/**
+	 * @var \Symfony\Component\HttpFoundation\Request $request
+	 */
 	public $request;
+
+	/**
+	 * @var \Symfony\Component\HttpFoundation\Session\Session $session
+	 */
 	public $session;
+
+	/**
+	 * @var string $ds System default directory separator
+	 */
 	public $ds = DIRECTORY_SEPARATOR;
+
+	/**
+	 * @var \werx\Core\Dispatcher $app
+	 */
 	public $app;
+
+	/**
+	 * @var \werx\Core\Input $input
+	 */
 	public $input;
+
 
 	public function __construct($opts = [])
 	{
@@ -46,6 +73,7 @@ class Controller
 
 	/**
 	 * Set up the configuration manager.
+	 *
 	 * @param string $app_dir Filesystem path to the config directory
 	 */
 	public function initializeConfig($app_dir = null)
@@ -55,6 +83,7 @@ class Controller
 
 	/**
 	 * Set up the template system
+	 *
 	 * @param string $directory Filesystem path to the views directory.
 	 */
 	public function initializeTemplate($directory = null)
@@ -72,6 +101,8 @@ class Controller
 
 	/**
 	 * Get info about the HTTP Request
+	 *
+	 * @var \Symfony\Component\HttpFoundation\Request $request
 	 */
 	public function initializeRequest($request = null)
 	{
@@ -91,6 +122,7 @@ class Controller
 	 * This is something you might want to override in your controller so you can
 	 * redirect to a page with a message about being logged out after detecting the session has expired.
 	 *
+	 * @var int $session_expiration Session Expiration in seconds
 	 */
 	protected function initializeSession($session_expiration = null)
 	{
@@ -129,6 +161,10 @@ class Controller
 
 	/**
 	 * Internal or External Redirect to the specified url
+	 *
+	 * @param $url
+	 * @param array $params
+	 * @param bool $is_query_string
 	 */
 	public function redirect($url, $params = [], $is_query_string = false)
 	{
@@ -156,6 +192,11 @@ class Controller
 		$response->send();
 	}
 
+	/**
+	 * Send a json response with given content.
+	 *
+	 * @param array $content
+	 */
 	public function json($content = [])
 	{
 		$response = new JsonResponse();
@@ -163,6 +204,12 @@ class Controller
 		$response->send();
 	}
 
+	/**
+	 * Send a jsonp response with given content.
+	 *
+	 * @param array $content
+	 * @param string $jsonCallback
+	 */
 	public function jsonp($content = [], $jsonCallback = 'callback')
 	{
 		$response = new JsonResponse();
@@ -171,13 +218,12 @@ class Controller
 		$response->send();
 	}
 
-	public function __call($method = null, $args = null)
-	{
-		// Send a 404 for any methods that don't exist.
-		$response = new Response('Not Found', 404, ['Content-Type' => 'text/plain']);
-		$response->send();
-	}
-
+	/**
+	 * Which controller was requested?
+	 *
+	 * @param null $default
+	 * @return null|string
+	 */
 	public function getRequestedController($default = null)
 	{
 		if (property_exists($this, 'app') && is_object($this->app) && property_exists($this->app, 'controller')) {
@@ -190,6 +236,12 @@ class Controller
 		}
 	}
 
+	/**
+	 * Which action was requested?
+	 *
+	 * @param string $default
+	 * @return string
+	 */
 	public function getRequestedAction($default = 'index')
 	{
 		if (property_exists($this, 'app') && is_object($this->app) && property_exists($this->app, 'action')) {
@@ -197,5 +249,12 @@ class Controller
 		} else {
 			return $default;
 		}
+	}
+
+	public function __call($method = null, $args = null)
+	{
+		// Send a 404 for any methods that don't exist.
+		$response = new Response('Not Found', 404, ['Content-Type' => 'text/plain']);
+		$response->send();
 	}
 }

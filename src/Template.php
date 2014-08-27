@@ -10,7 +10,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
  */
 class Template extends \League\Plates\Template
 {
+	/**
+	 * @method \League\Plates\Engine $engine
+	 */
 	public $engine;
+
 	protected $unguarded = ['unguarded', 'engine'];
 
 	public function __construct($path = null)
@@ -32,7 +36,12 @@ class Template extends \League\Plates\Template
 	}
 
 	/**
+	 * Return our compiled view.
 	 * Sanitize the data before rendering.
+	 *
+	 * @param string $view
+	 * @param array $data
+	 * @return string
 	 */
 	public function render($view, array $data = null)
 	{
@@ -51,6 +60,8 @@ class Template extends \League\Plates\Template
 
 	/**
 	 * Output the content instead of just render.
+	 * @param $view
+	 * @param array $data
 	 */
 	public function output($view, array $data = null)
 	{
@@ -58,13 +69,22 @@ class Template extends \League\Plates\Template
 		$response->send();
 	}
 
+	/**
+	 * Add a directory where views can be found.
+	 *
+	 * @param $name
+	 * @param $path
+	 */
 	public function addFolder($name, $path)
 	{
 		$this->engine->addFolder($name, $path);
 	}
 
 	/**
-	 * Recursively sanitize output
+	 * Recursively sanitize output.
+	 *
+	 * @param $var
+	 * @return array
 	 */
 	public function scrub($var)
 	{
@@ -97,6 +117,11 @@ class Template extends \League\Plates\Template
 		}
 	}
 
+	/**
+	 * Don't escape template variables with the specified name.
+	 *
+	 * @param $key
+	 */
 	public function unguard($key)
 	{
 		if (is_array($key)) {
@@ -108,11 +133,19 @@ class Template extends \League\Plates\Template
 		}
 	}
 
+	/**
+	 * @param array $data
+	 */
 	public function setPrefill($data = [])
 	{
 		$this->data(['prefill' => $data]);
 	}
 
+	/**
+	 * @param $key
+	 * @param null $default
+	 * @return null
+	 */
 	public function prefill($key, $default = null)
 	{
 		if (isset($this->prefill)) {
@@ -122,6 +155,10 @@ class Template extends \League\Plates\Template
 		}
 	}
 
+	/**
+	 * @param $extension
+	 * @return \League\Plates\Engine
+	 */
 	public function loadExtension($extension)
 	{
 		return $this->engine->loadExtension($extension);
