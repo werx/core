@@ -25,14 +25,14 @@ class Template extends \League\Plates\Template
 		parent::__construct($this->engine);
 	}
 
-	public function uri($resource)
+	public function uri($resource = null)
 	{
-		return $_SERVER['SCRIPT_NAME'] . '/' . ltrim($resource, '/');
+		return $this->url()->action($resource);
 	}
 
-	public function asset($resource)
+	public function asset($resource = null)
 	{
-		return dirname($_SERVER['SCRIPT_NAME']) . $resource;
+		return $this->url()->asset($resource);
 	}
 
 	/**
