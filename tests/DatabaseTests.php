@@ -138,6 +138,51 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('James', $captain_result->first_name);
 	}
 
+	public function testGetLastQueryLogsEnabled()
+	{
+		$this->databaseInitSimple();
+
+		// explicitly enable query logging
+		\Illuminate\Database\Capsule\Manager::connection()->enableQueryLog();
+
+		// run a query
+		\werx\Core\Tests\App\Models\Captain::search(['first_name' => 'James', 'last_name' => 'Picard']);
+
+		$query = Database::getLastQuery();
+		$expected = 'select * from "captains" where "first_name" like \'James%\' and "last_name" like \'Picard%\'';
+
+		$this->assertEquals($expected, $query);
+	}
+
+	public function testGetLastQueryLogsDisabled()
+	{
+		$this->databaseInitSimple();
+
+		// explicitly enable query logging
+		\Illuminate\Database\Capsule\Manager::connection()->disableQueryLog();
+
+		// run a query
+		\werx\Core\Tests\App\Models\Captain::search(['first_name' => 'James', 'last_name' => 'Picard']);
+
+		$query = Database::getLastQuery();
+		$expected = '';
+
+		$this->assertEquals($expected, $query);
+	}
+
+	public function testGetLastQueryNoQueryRun()
+	{
+		$this->databaseInitSimple();
+
+		// explicitly enable query logging
+		\Illuminate\Database\Capsule\Manager::connection()->enableQueryLog();
+
+		$query = Database::getLastQuery();
+		$expected = '';
+
+		$this->assertEquals($expected, $query);
+	}
+
 	protected function getTestDsnSimple()
 	{
 		return ['driver' => 'sqlite','database' => __DIR__ . '/resources/storage/example.sqlite'];

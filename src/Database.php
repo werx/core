@@ -9,6 +9,11 @@ class Database
 {
 	public static $driver = [];
 
+	/**
+	 * Initialize the connection to the database.
+	 *
+	 * @param null $config
+	 */
 	public static function init($config = null)
 	{
 		$defaults = [
@@ -87,5 +92,25 @@ class Database
 		}
 
 		return $opts;
+	}
+
+	public static function getLastQuery($connection = "")
+	{
+		$last_query = "";
+		$query_log = Capsule::connection($connection)->getQueryLog();
+
+		// if query logging IS turned on and we HAVE run at least one query
+		if (!empty($query_log)) {
+
+			// get our last query from the log
+			$last_query_index = count($query_log) - 1;
+			$last_query_pieces = $query_log[$last_query_index];
+
+			// swap the question marks for string tokens for (v)sprintf
+			$query_pattern = str_replace('?', "'%s'", $last_query_pieces['query']);
+			$last_query = vsprintf($query_pattern, $last_query_pieces['bindings']);
+		}
+
+		return $last_query;
 	}
 }
