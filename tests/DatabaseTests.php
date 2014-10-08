@@ -183,6 +183,18 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 		$this->assertEquals($expected, $query);
 	}
 
+	public function testPreviewQuery()
+	{
+		$this->databaseInitSimple();
+
+		$query = \werx\Core\Tests\App\Models\Captain::where('first_name', 'James');
+
+		$sql = Database::getQueryPreview($query);
+		$expected = 'select * from "captains" where "first_name" = \'James\'';
+
+		$this->assertEquals($expected, $sql);
+	}
+
 	protected function getTestDsnSimple()
 	{
 		return ['driver' => 'sqlite','database' => __DIR__ . '/resources/storage/example.sqlite'];

@@ -3,6 +3,7 @@
 namespace werx\Core;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Prelude\Dsn\DsnParser;
 
 class Database
@@ -66,6 +67,12 @@ class Database
 		$capsule->bootEloquent();
 	}
 
+	/**
+	 * Return the name of the random function based on the SQL dialect being used.
+	 *
+	 * @param string $connection_name
+	 * @return string
+	 */
 	public static function random($connection_name = 'default')
 	{
 		if (self::$driver[$connection_name] == 'sqlite') {
@@ -75,6 +82,12 @@ class Database
 		}
 	}
 
+	/**
+	 * Take a string DSN and parse it into an array of its pieces
+	 *
+	 * @param null $string
+	 * @return array|null
+	 */
 	public static function parseDsn($string = null)
 	{
 		$opts = null;
@@ -94,6 +107,32 @@ class Database
 		return $opts;
 	}
 
+	/**
+	 * Get a preview of what query will be run from a query builder.
+	 *
+	 * This DOES NOT run the query so it can be used for debugging potentially memory-intensive queries.
+	 *
+	 * @param QueryBuilder $query
+	 * @return string
+	 */
+	public static function getQueryPreview(QueryBuilder $query = null)
+	{
+		if (empty($query)) {
+			return "";
+		}
+
+		$sql        = str_replace('?', "'%s'", $query->toSql());
+		$bindings   = $query->getBindings();
+
+		return vsprintf($sql, $bindings);
+	}
+
+	/**
+	 * Get the last query that was run with data that was used bound to it.
+	 *
+	 * @param string $connection
+	 * @return string
+	 */
 	public static function getLastQuery($connection = "")
 	{
 		$last_query = "";
