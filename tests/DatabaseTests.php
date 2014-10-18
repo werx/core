@@ -71,7 +71,7 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 		$this->assertEquals('James', $result->first_name);
 	}
 
-	public function testUnhainedQueryBuilder()
+	public function testUnchainedQueryBuilder()
 	{
 		$this->databaseInitSimple();
 

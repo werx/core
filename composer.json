@@ -22,11 +22,11 @@
 		"php": ">= 5.4",
 		"aura/router": "2.0.*@dev",
 		"league/plates": "2.1.0",
-		"werx/config": "0.3.*",
+		"werx/config": "1.*",
 		"illuminate/database": "4.2.*@dev",
-		"prelude/prelude-dsn": "dev-master",
+		"prelude/prelude-database": "0.0.3",
 		"symfony/http-foundation": "2.5.*@dev",
-		"werx/url": "dev-master"
+		"werx/url": "1.*"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "3.7.*",

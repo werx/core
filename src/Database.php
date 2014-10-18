@@ -4,7 +4,7 @@ namespace werx\Core;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Prelude\Dsn\DsnParser;
+use Prelude\Database\DsnParser;
 
 class Database
 {
