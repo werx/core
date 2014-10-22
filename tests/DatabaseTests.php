@@ -2,6 +2,7 @@
 
 namespace werx\Core\Tests;
 
+use Illuminate\Database\Capsule\Manager;
 use werx\Core\Database;
 
 class DatabaseTests extends \PHPUnit_Framework_TestCase
@@ -193,6 +194,50 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 		$expected = 'select * from "captains" where "first_name" = \'James\'';
 
 		$this->assertEquals($expected, $sql);
+	}
+
+	public function testOptionToggleQueryLoggingEnabled()
+	{
+		// connect with query logging turned on
+		$config = $this->getTestDsnSimple();
+		$config['log_queries'] = true;
+		Database::init($config);
+
+		// run a query
+		\werx\Core\Tests\App\Models\Captain::search(['first_name' => 'James', 'last_name' => 'Picard']);
+
+		// we should have one query in our query log
+		$this->assertCount(1, Manager::connection('default')->getQueryLog());
+	}
+
+	public function testOptionToggleQueryLoggingDisabled()
+	{
+		// connect with query logging turned on
+		$config = $this->getTestDsnSimple();
+		$config['log_queries'] = false;
+		Database::init($config);
+
+		// run a query
+		\werx\Core\Tests\App\Models\Captain::search(['first_name' => 'James', 'last_name' => 'Picard']);
+
+		// we should have one query in our query log
+		$this->assertCount(0, Manager::connection('default')->getQueryLog());
+	}
+
+	public function testGetPrettyQueries()
+	{
+		$this->databaseInitSimple();
+
+		// run some queries
+		\werx\Core\Tests\App\Models\Captain::search(['first_name' => 'James', 'last_name' => 'Picard']);
+		\werx\Core\Tests\App\Models\Captain::search(['first_name' => 'Foo', 'last_name' => 'Bar']);
+
+		$queries = Database::getPrettyQueryLog();
+		$expected1 = 'select * from "captains" where "first_name" like \'James%\' and "last_name" like \'Picard%\'';
+		$expected2 = 'select * from "captains" where "first_name" like \'Foo%\' and "last_name" like \'Bar%\'';
+
+		$this->assertEquals($expected1, $queries[0]);
+		$this->assertEquals($expected2, $queries[1]);
 	}
 
 	protected function getTestDsnSimple()

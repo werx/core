@@ -18,14 +18,15 @@ class Database
 	public static function init($config = null)
 	{
 		$defaults = [
-			'driver'	=> 'mysql',
-			'host'		=> 'localhost',
-			'database'	=> 'mysql',
-			'username'	=> 'root',
-			'password'	=> null,
-			'charset'	=> 'utf8',
-			'collation'	=> 'utf8_unicode_ci',
-			'prefix'	=> null
+			'driver'	    => 'mysql',
+			'host'		    => 'localhost',
+			'database'	    => 'mysql',
+			'username'	    => 'root',
+			'password'	    => null,
+			'log_queries'   => true,
+			'charset'	    => 'utf8',
+			'collation'	    => 'utf8_unicode_ci',
+			'prefix'	    => null
 		];
 
 		$capsule = new Capsule;
@@ -65,6 +66,17 @@ class Database
 
 		$capsule->setAsGlobal();
 		$capsule->bootEloquent();
+
+		// determine if we should log queries or not
+		foreach ($options as $name => $info) {
+
+			// make sure we use FALSE to disable queries, otherwise it'll just default to logging queries
+			if (isset($info['log_queries']) && $info['log_queries'] === false) {
+				Capsule::connection($name)->disableQueryLog();
+			} else {
+				Capsule::connection($name)->enableQueryLog();
+			}
+		}
 	}
 
 	/**
@@ -136,20 +148,32 @@ class Database
 	public static function getLastQuery($connection = "")
 	{
 		$last_query = "";
-		$query_log = Capsule::connection($connection)->getQueryLog();
+		$pretty_queries = self::getPrettyQueryLog($connection);
 
-		// if query logging IS turned on and we HAVE run at least one query
-		if (!empty($query_log)) {
-
-			// get our last query from the log
-			$last_query_index = count($query_log) - 1;
-			$last_query_pieces = $query_log[$last_query_index];
-
-			// swap the question marks for string tokens for (v)sprintf
-			$query_pattern = str_replace('?', "'%s'", $last_query_pieces['query']);
-			$last_query = vsprintf($query_pattern, $last_query_pieces['bindings']);
+		if (!empty($pretty_queries)) {
+			$last_query = $pretty_queries[ count($pretty_queries) - 1 ];
 		}
 
 		return $last_query;
+	}
+
+	/**
+	 * Get a list of all queries formatted with their bindings in place
+	 *
+	 * @param string $connection
+	 * @return array
+	 */
+	public static function getPrettyQueryLog($connection = "")
+	{
+		$return_queries = [];
+
+		$queries = Capsule::connection($connection)->getQueryLog();
+
+		foreach ($queries as $query) {
+			$query_pattern = str_replace('?', "'%s'", $query['query']);
+			$return_queries[] = vsprintf($query_pattern, $query['bindings']);
+		}
+
+		return $return_queries;
 	}
 }
