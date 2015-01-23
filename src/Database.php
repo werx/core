@@ -36,13 +36,11 @@ class Database
 		}
 
 		if (is_array($config)) {
-
 			// missing 'driver' key, so it must be an array of arrays
 			if (!array_key_exists('driver', $config)) {
-
-				// if we have an array of connections, iterate through them.  connections should be stored in the form of name => conn_info
+				// if we have an array of connections, iterate through them.
+				// Cnnections should be stored in the form of name => conn_info
 				foreach ($config as $connection_name => $connection_info) {
-
 					// if it's a dsn string, then parse it
 					if (is_string($connection_info)) {
 						$connection_info = self::parseDsn($connection_info);
@@ -69,7 +67,6 @@ class Database
 
 		// determine if we should log queries or not
 		foreach ($options as $name => $info) {
-
 			// make sure we use FALSE to disable queries, otherwise it'll just default to logging queries
 			if (isset($info['log_queries']) && $info['log_queries'] === false) {
 				Capsule::connection($name)->disableQueryLog();

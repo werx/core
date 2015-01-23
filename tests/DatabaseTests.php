@@ -7,10 +7,6 @@ use werx\Core\Database;
 
 class DatabaseTests extends \PHPUnit_Framework_TestCase
 {
-	public function __construct() {
-		error_reporting(E_ALL);
-	}
-	
 	public function testCanParseDsn()
 	{
 		$dsn = Database::parseDsn('mysql://un:pw@hostname/dbname');

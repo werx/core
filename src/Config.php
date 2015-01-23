@@ -117,8 +117,8 @@ class Config
 		return call_user_func_array([$this->config, $method], $args);
 	}
 
-	public function __get($property = null) {
-
+	public function __get($property = null)
+	{
 		switch($property) {
 			case 'base_url':
 				return $this->getBaseUrl();

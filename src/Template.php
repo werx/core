@@ -95,7 +95,8 @@ class Template extends \League\Plates\Template
 		} elseif (is_array($var)) {
 			// Sanitize arrays
 			while (list($key) = each($var)) {
-				// casting key to string for the case of numeric indexed arrays, i.e. 0, 1, etc. b/c 0 == any string in php
+				// casting key to string for the case of numeric indexed arrays
+				// i.e. 0, 1, etc. b/c 0 == any string in php
 				if (!in_array((string)$key, $this->unguarded)) {
 					$var[$key] = $this->scrub($var[$key]);
 				}
