@@ -29,8 +29,7 @@
 		"werx/url": "1.*"
 	},
 	"require-dev": {
-		"phpunit/phpunit": "3.7.*",
-		"squizlabs/php_codesniffer": "1.*"
-	},
-	"minimum-stability": "dev"
+		"phpunit/phpunit": "~4.4",
+		"squizlabs/php_codesniffer": "~2.2"
+	}
 }
