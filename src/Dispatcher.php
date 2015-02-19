@@ -147,15 +147,25 @@ class Dispatcher
 			$action = 'index';
 		}
 
-		// does the route indicate an id?
-		if (isset($route->params['id'])) {
-			// take the action method directly from the route
-			$id = $route->params['id'];
-			return array($controller, $action, $id);
+		$tokens = array_keys($route->tokens);
+
+		if (count($tokens) > 0) {
+
+			$method_params = [];
+			foreach ($tokens as $t) {
+				if (array_key_exists($t, $route->params)) {
+					$method_params[$t] = $route->params[$t];
+				}
+			}
+
+			// Use an array of method parameters.
+			return array($controller, $action, $method_params);
+		} elseif (isset($route->params['id'])) {
+			// Route contains an id
+			return array($controller, $action, $route->params['id']);
 		} else {
-			// use a default action
-			$id = null;
-			return array($controller, $action, $id);
+			// No id specified, just send null.
+			return array($controller, $action, null);
 		}
 	}
 }
