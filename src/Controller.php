@@ -181,9 +181,6 @@ class Controller
 	protected function exposeScriptName($expose = true)
 	{
 		$this->expose_script_name = $expose;
-
-		// Since we've changed this setting, we need to reinitialize the template.
-		$this->initializeTemplate($this->views_directory);
 	}
 
 	/**
