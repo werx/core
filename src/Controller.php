@@ -49,6 +49,17 @@ class Controller
 	 */
 	public $input;
 
+	/**
+	 * Should we expose script name by default when building urls?
+	 * @var bool
+	 */
+	public $expose_script_name = true;
+
+	/**
+	 * Directory we are serving views from.
+	 */
+	public $views_directory;
+
 
 	public function __construct($opts = [])
 	{
@@ -92,10 +103,13 @@ class Controller
 			$directory = $this->config->resolvePath('views');
 		}
 
+		// Remember what directory was set. We may have to reinitialize the template later and don't want to lose the previous setting.
+		$this->views_directory = $directory;
+
 		$this->template = new Template($directory, $this->config);
 
 		// Add our url builder to the template.
-		$extension = new \werx\Url\Extensions\Plates();
+		$extension = new \werx\Url\Extensions\Plates(null, null, $this->expose_script_name);
 		$this->template->loadExtension($extension);
 	}
 
@@ -160,6 +174,19 @@ class Controller
 	}
 
 	/**
+	 * Should we expose the script name when building Urls?
+	 *
+	 * @param bool $expose default true
+	 */
+	protected function exposeScriptName($expose = true)
+	{
+		$this->expose_script_name = $expose;
+
+		// Since we've changed this setting, we need to reinitialize the template.
+		$this->initializeTemplate($this->views_directory);
+	}
+
+	/**
 	 * Internal or External Redirect to the specified url
 	 *
 	 * @param $url
@@ -169,7 +196,7 @@ class Controller
 	public function redirect($url, $params = [], $is_query_string = false)
 	{
 		if (!preg_match('/^http/', $url)) {
-			$url_builder = new \werx\Url\Builder;
+			$url_builder = new \werx\Url\Builder(null, null, $this->expose_script_name);
 
 			if ($is_query_string && is_array($params)) {
 				$url = $url_builder->query($url, $params);
