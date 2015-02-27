@@ -131,8 +131,14 @@ class Dispatcher
 	{
 		// does the route indicate a controller?
 		if (isset($route->params['controller'])) {
-			// take the controller class directly from the route
-			$controller = ucfirst(strtolower($route->params['controller']));
+			// explode out our route parts in case there are any namespaces
+			$controller_parts = explode('\\', $route->params['controller']);
+
+			// only run strtolower/ucfirst on the last part since that is the controller
+			$controller_parts[count($controller_parts) - 1] = ucfirst(strtolower($controller_parts[count($controller_parts) - 1]));
+
+			// put back together the route parts
+			$controller = implode('\\', $controller_parts);
 		} else {
 			// use a default controller
 			$controller = 'Home';
