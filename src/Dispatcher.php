@@ -11,7 +11,7 @@ class Dispatcher
 	public $opts = [];
 	public $router;
 	public $namespace = 'werx\Skeleton';
-	public $controller;
+	public $controller = 'Home';
 	public $action;
 	public $id;
 	public $app_dir;
@@ -58,8 +58,14 @@ class Dispatcher
 		$this->controller = strtolower($controller);
 		$this->action = $action;
 
-		// instantiate the controller class
-		$class = join('\\', [$this->namespace, 'Controllers', $controller]);
+		if (substr($controller, 0, 1) == '\\') {
+			// Fully qualified namespace
+			$class = $controller;
+			$this->controller = strtolower(last(explode('\\', $controller)));
+		} else {
+			// instantiate the controller class from the default namespace
+			$class = join('\\', [$this->namespace, 'Controllers', $controller]);
+		}
 
 		if (!class_exists($class)) {
 			return $this->pageNotFound();
@@ -153,7 +159,7 @@ class Dispatcher
 			}
 		} else {
 			// use a default controller
-			$controller = 'Home';
+			$controller = $this->controller;
 		}
 
 		// does the route indicate an action?
