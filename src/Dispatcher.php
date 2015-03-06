@@ -141,8 +141,10 @@ class Dispatcher
 			// explode out our route parts in case there are any namespaces
 			$controller_parts = explode('\\', $route->params['controller']);
 
-			// only run strtolower/ucfirst on the last part since that is the controller
-			$controller_parts[count($controller_parts) - 1] = ucfirst(strtolower($controller_parts[count($controller_parts) - 1]));
+            // only convert on the last part since that is the controller
+            // ucfirst after camel_case because laravel's camel_case doesn't
+            // uppercase the first letter
+            $controller_parts[count($controller_parts) - 1] = ucfirst(camel_case(($controller_parts[count($controller_parts) - 1])));
 
 			// put back together the route parts
 			$controller = implode('\\', $controller_parts);
