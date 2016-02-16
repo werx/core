@@ -153,6 +153,10 @@ class Controller
 
 		$this->config->load('config');
 
+		// Should session cookie be http only? Default true to reduce XSS attack vector.
+		$session_cookie_httponly = (bool) $this->config->get('session_cookie_httponly', true);
+		ini_set('session.cookie_httponly', $session_cookie_httponly);
+
 		// We need a unique session name for this app. Let's use last 10 characters the file path's sha1 hash.
 		try {
 			$this->session->setName('TSAPP' . substr(sha1(__FILE__), -10));
