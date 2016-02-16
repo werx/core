@@ -214,6 +214,7 @@ class Controller
 
 		$response = new RedirectResponse($url);
 		$response->send();
+		exit;
 	}
 
 	/**
