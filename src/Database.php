@@ -4,7 +4,7 @@ namespace werx\Core;
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
-use Prelude\Database\DsnParser;
+use Nyholm\DSN;
 
 class Database
 {
@@ -102,14 +102,17 @@ class Database
 		$opts = null;
 
 		if (!empty($string)) {
-			$dsn = (object) DsnParser::parseUrl($string)->toArray();
+			$dsn = new DSN($string);
+
+			$port = empty($dsn->getFirstPort()) ? '' : (':' . $dsn->getFirstPort());
+			$password = empty($dsn->getPassword()) ? null : $dsn->getPassword();
 
 			$opts = [
-				'driver'	=> $dsn->driver,
-				'host'		=> $dsn->host,
-				'database'	=> $dsn->dbname,
-				'username'	=> $dsn->user,
-				'password'	=> isset($dsn->pass) ? $dsn->pass : null
+				'driver'	=> $dsn->getProtocol(),
+				'host'		=> $dsn->getFirstHost() . $port,
+				'database'	=> $dsn->getDatabase(),
+				'username'	=> $dsn->getUsername(),
+				'password'	=> $password
 			];
 		}
 

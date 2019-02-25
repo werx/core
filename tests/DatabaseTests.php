@@ -9,7 +9,7 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 {
 	public function testCanParseDsn()
 	{
-		$dsn = Database::parseDsn('mysql://un:pw@hostname/dbname');
+		$dsn = Database::parseDsn('mysql://un:pw@hostname:3306/dbname');
 
 		$this->assertArrayHasKey('driver', $dsn);
 		$this->assertArrayHasKey('host', $dsn);
@@ -18,7 +18,7 @@ class DatabaseTests extends \PHPUnit_Framework_TestCase
 		$this->assertArrayHasKey('password', $dsn);
 
 		$this->assertEquals('mysql', $dsn['driver']);
-		$this->assertEquals('hostname', $dsn['host']);
+		$this->assertEquals('hostname:3306', $dsn['host']);
 		$this->assertEquals('un', $dsn['username']);
 		$this->assertEquals('pw', $dsn['password']);
 	}
