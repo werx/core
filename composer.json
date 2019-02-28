@@ -19,7 +19,7 @@
 		}
 	},
 	"require": {
-		"php": ">= 5.4",
+		"php": ">= 5.5",
 		"aura/router": "~2.0",
 		"league/plates": "~2.1",
 		"werx/config": "~1.0",
